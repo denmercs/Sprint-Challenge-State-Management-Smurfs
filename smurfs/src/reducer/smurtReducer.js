@@ -1,9 +1,4 @@
-import {
-  FETCHING_DATA_START,
-  FETCHING_DATA_SUCCESS,
-  FETCHING_DATA_FAILURE,
-  POST_DATA
-} from "../action";
+import { FETCHING_DATA_SUCCESS, ADD_POST, DELETE_POST } from "../action";
 
 const initialState = {
   cards: [],
@@ -19,8 +14,10 @@ export const reducer = (state = initialState, action) => {
         cards: action.payload,
         isLoading: true
       };
-    case POST_DATA:
+    case ADD_POST:
       return [...state, action.payload];
+    case DELETE_POST:
+      return state.filter(post => post.id !== action.payload.id);
     default:
       return state;
   }

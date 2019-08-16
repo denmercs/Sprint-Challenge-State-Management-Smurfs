@@ -1,16 +1,12 @@
 import axios from "axios";
 
-// export const TESTING = "TESTING";
-
 export const FETCHING_DATA_START = "FETCHING_DATA_START";
 export const FETCHING_DATA_SUCCESS = "FETCHING_DATA_SUCCESS";
 export const FETCHING_DATA_FAILURE = "FETCHING_DATA_FAILURE";
-export const POST_DATA = "POST_DATA";
+export const ADD_POST = "ADD_POST";
+export const DELETE_POST = "DELETE_POST";
 
 export const getData = () => {
-  //   return dispatch => {
-  //     dispatch({ type: "TESTING" });
-  //   };
   return dispatch => {
     dispatch({ type: FETCHING_DATA_START });
     axios
@@ -30,12 +26,12 @@ export const getData = () => {
   };
 };
 
-export const postData = () => {
+export const createPost = ({ name, age, height }) => {
   return dispatch => {
     axios
-      .post("http://localhost:3333/smurfs")
+      .post("http://localhost:3333/smurfs", { name, age, height })
       .then(res => {
-        dispatch(createPostSuccess(res.data));
+        console.log("response", res.data);
       })
       .catch(error => {
         throw error;
@@ -43,13 +39,11 @@ export const postData = () => {
   };
 };
 
-export const createPostSuccess = data => {
-  return {
-    type: POST_DATA,
-    payload: {
-      id: data.id,
-      name: data.name,
-      height: data.height
-    }
+export const deletePost = id => {
+  return dispatch => {
+    axios
+      .get(`http://localhost:3333/smurfs/delete/${id}`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 };
